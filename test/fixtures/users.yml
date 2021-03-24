@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  email: MyString
+  password_digest: MyString
+  direction: MyString
+  role: 1
+  token: 
+
+two:
+  name: MyString
+  email: MyString
+  password_digest: MyString
+  direction: MyString
+  role: 1
+  token: 
