@@ -38,6 +38,7 @@ group :rubocop do
   gem 'rubocop-rails', require: false
 end
 
+gem 'email_validator'
 # #
 
 group :development, :test do
