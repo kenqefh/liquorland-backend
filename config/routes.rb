@@ -8,9 +8,12 @@ Rails.application.routes.draw do
     resources :users, only: %i[show index create update] do
       resources :sales, only: %i[index show create]
     end
+    
     resources :brands, only: %i[index show]
     resources :styles, only: %i[index show]
     resources :categories, only: %i[index show]
-    resources :drinks, only: %i[index show]
+    resources :drinks, only: %i[index show] do
+      resources :reviews, only: %i[index create update destroy]
+    end
   end
 end
