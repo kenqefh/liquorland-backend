@@ -3,7 +3,9 @@ class Drink < ApplicationRecord
   belongs_to :style
   belongs_to :category
   has_many :carts
+  has_many :favorites
   has_many :users_cart, through: :carts, source: :user
+  has_many :users_favorite, through: :favorites, source: :user
   has_one_attached :image
 
   has_many :reviews

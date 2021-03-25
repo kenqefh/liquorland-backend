@@ -8,7 +8,10 @@ class User < ApplicationRecord
   has_many :sales
   has_many :reviews
   has_many :carts
+  has_many :favorites
   has_many :drinks_cart, through: :carts, source: :drink
+  has_many :drinks_favorite, through: :favorites, source: :drink
+  
 
   validates :name, presence: true, length: { minimum: 2, maximum: 60 }
   validates :email, presence: true, email: true, uniqueness: true
