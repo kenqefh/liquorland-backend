@@ -83,6 +83,8 @@ GEM
     email_validator (2.2.2)
       activemodel
     erubi (1.10.0)
+    faker (2.17.0)
+      i18n (>= 1.6, < 2)
     ffi (1.15.0)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
@@ -240,6 +242,7 @@ DEPENDENCIES
   byebug
   capybara (>= 3.26)
   email_validator
+  faker
   jbuilder (~> 2.7)
   listen (~> 3.3)
   pg (~> 1.1)
