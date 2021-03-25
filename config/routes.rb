@@ -6,5 +6,6 @@ Rails.application.routes.draw do
     post '/login' => 'sessions#create'
     get '/logout' => 'sessions#destroy'
     resources :users, only: %i[show index create update]
+    resources :brands, only: %i[index show]
   end
 end
