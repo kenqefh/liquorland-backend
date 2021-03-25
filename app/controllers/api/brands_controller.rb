@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::BrandsController < ApiController
   before_action :set_brand, only:  %i[show]
   skip_before_action :authorize, only: %i[index show]
