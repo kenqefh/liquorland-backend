@@ -89,3 +89,14 @@ drinks = Drink.all
   )
 end
 puts 'End insertion of carts'
+
+
+puts 'start insertion of sales'
+3.times do |ite|
+  Sale.create(
+  total: (1 * rand(9)) * 5,
+  user: user,
+  code: "SALE-000#{ite}"
+  )
+end
+puts 'End insertion of sales'
