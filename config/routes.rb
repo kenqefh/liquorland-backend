@@ -5,6 +5,6 @@ Rails.application.routes.draw do
   namespace :api do
     post '/login' => 'sessions#create'
     get '/logout' => 'sessions#destroy'
-    resources :users, only: %i[show index create]
+    resources :users, only: %i[show index create update]
   end
 end
