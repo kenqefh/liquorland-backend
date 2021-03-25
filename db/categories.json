@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Wines",
+    "description": "Our experience with wine testing, assessment and extensive knowledge of our field allow us to guarantee the provenance of every wine we sell.",
+    "color": "FDE598"
+  },
+  {
+    "name": "Beers",
+    "description": "The Best Beer in Town",
+    "color": "D3B0E0"
+  },
+  {
+    "name": "Non-Alcoholic Drinks",
+    "description": "Best Non-Alcoholic Drinks That Are Actually Worth Buying ",
+    "color": "B7DFF5"
+  }
+]
