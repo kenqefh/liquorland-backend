@@ -52,7 +52,6 @@ ActiveRecord::Schema.define(version: 2021_03_25_030820) do
   create_table "sales", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.decimal "total", default: "0.0"
-    t.datetime "date"
     t.string "code"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

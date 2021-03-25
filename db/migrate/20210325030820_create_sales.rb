@@ -3,7 +3,6 @@ class CreateSales < ActiveRecord::Migration[6.1]
     create_table :sales do |t|
       t.references :user, null: false, foreign_key: true
       t.decimal :total, default: 0
-      t.datetime :date
       t.string :code
 
       t.timestamps
