@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_25_171847) do
+ActiveRecord::Schema.define(version: 2021_03_25_223502) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,6 +86,16 @@ ActiveRecord::Schema.define(version: 2021_03_25_171847) do
     t.index ["style_id"], name: "index_drinks_on_style_id"
   end
 
+  create_table "favorites", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "drink_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["drink_id"], name: "index_favorites_on_drink_id"
+    t.index ["user_id", "drink_id"], name: "index_favorites_on_user_id_and_drink_id", unique: true
+    t.index ["user_id"], name: "index_favorites_on_user_id"
+  end
+
   create_table "reviews", force: :cascade do |t|
     t.integer "rating"
     t.text "comment"
@@ -132,6 +142,8 @@ ActiveRecord::Schema.define(version: 2021_03_25_171847) do
   add_foreign_key "drinks", "brands"
   add_foreign_key "drinks", "categories"
   add_foreign_key "drinks", "styles"
+  add_foreign_key "favorites", "drinks"
+  add_foreign_key "favorites", "users"
   add_foreign_key "reviews", "drinks"
   add_foreign_key "reviews", "users"
   add_foreign_key "sales", "users"
