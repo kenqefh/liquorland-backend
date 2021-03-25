@@ -57,6 +57,15 @@ ActiveRecord::Schema.define(version: 2021_03_25_040650) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "sales", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.decimal "total", default: "0.0"
+    t.string "code"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_sales_on_user_id"
+  end
+
   create_table "styles", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -78,4 +87,5 @@ ActiveRecord::Schema.define(version: 2021_03_25_040650) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "sales", "users"
 end
