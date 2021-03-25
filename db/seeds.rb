@@ -11,8 +11,21 @@ require 'faker'
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+Cart.destroy_all
+# Favorite.destroy_all
+# SaleDrink.destroy_all
+# Review.destroy_all
+
+Sale.destroy_all
+Drink.destroy_all
+
+Category.destroy_all
+Brand.destroy_all
+Style.destroy_all
+User.destroy_all
+
 puts 'Insert user'
-User.create(name: 'Test User', email: 'test@mail.com', password: '123456', direction: 'Pl. Saturno Luna 2')
+user = User.create(name: 'Test User', email: 'test@mail.com', password: '123456', direction: 'Pl. Saturno Luna 2')
 puts 'END Insert user'
 
 puts 'Insert brands'
@@ -34,7 +47,6 @@ end
 puts 'end insertion of styles'
 
 puts 'Insert categories'
-Category.destroy_all
 categories_data = JSON.parse(File.read('db/categories.json'), symbolize_names: true)
 categories_data.each do |category_data|
   category = {
@@ -52,7 +64,6 @@ brands = Brand.all
 styles = Style.all
 categories = Category.all
 
-Drink.destroy_all
 30.times do
   Drink.create(
     name: Faker::Beer.name,
@@ -67,3 +78,25 @@ Drink.destroy_all
   )
 end
 puts 'End drink insertion'
+
+puts 'start insertion of carts'
+drinks = Drink.all
+5.times do
+  Cart.create(
+  quantity: rand(10) + 1,
+  drink: drinks.sample,
+  user: user
+  )
+end
+puts 'End insertion of carts'
+
+
+puts 'start insertion of sales'
+3.times do |ite|
+  Sale.create(
+  total: (1 * rand(9)) * 5,
+  user: user,
+  code: "SALE-000#{ite}"
+  )
+end
+puts 'End insertion of sales'

@@ -4,8 +4,7 @@ class Api::SalesController < ApiController
   before_action :set_sale, only: %i[show]
 
   def create
-    user = User.find(params[:user_id])
-    sale = user.sales.create(sale_params)
+    sale = current_user.sales.create(sale_params)
     if sale.valid?
       sale.save
       render json: sale, status: :created
@@ -15,7 +14,7 @@ class Api::SalesController < ApiController
   end
 
   def index
-    render json: Sale.all
+    render json: current_user.sales
   end
 
   def show
@@ -28,6 +27,6 @@ class Api::SalesController < ApiController
     end
 
     def set_sale
-      @sale = Sale.find(params[:id])
+      @sale = current_user.sales.find(params[:id])
     end
 end
