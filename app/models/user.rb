@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   has_one_attached :profile
   has_many :sales
+  has_many :reviews
   has_many :carts
   has_many :drinks_cart, through: :carts, source: :drink
 

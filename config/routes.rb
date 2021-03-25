@@ -12,6 +12,8 @@ Rails.application.routes.draw do
     resources :brands, only: %i[index show]
     resources :styles, only: %i[index show]
     resources :categories, only: %i[index show]
-    resources :drinks, only: %i[index show]
+    resources :drinks, only: %i[index show] do
+      resources :reviews, only: %i[index create update destroy]
+    end
   end
 end

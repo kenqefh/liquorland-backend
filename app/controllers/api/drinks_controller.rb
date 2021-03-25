@@ -10,7 +10,10 @@ class Api::DrinksController < ApiController
   end
 
   def show
-    render json: @drink
+    drink_json=(JSON.parse @drink.to_json)
+    drink_json["avg"] = @drink.rating_avg
+    drink_json["reviews"] =  @drink.reviews
+    render json: drink_json
   end
 
   private
