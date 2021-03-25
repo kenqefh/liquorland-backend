@@ -4,6 +4,8 @@ class Drink < ApplicationRecord
   belongs_to :category
   has_many :carts
   has_many :users_cart, through: :carts, source: :user
+  has_many :sale_drinks
+  has_many :sales, through: :sale_drinks, source: :sale
   has_one_attached :image
 
   has_many :reviews
@@ -14,7 +16,6 @@ class Drink < ApplicationRecord
   validates :price, :stock, :alcohol_grades, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
   def rating_avg
-    reviews.map{ |i| i.rating }.sum.to_f/reviews_count
+    reviews.map { |i| i.rating }.sum.to_f / reviews_count
   end
-
 end
