@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  presentation: MyString
+  description: MyText
+  price: 9.99
+  stock: 1
+  alcohol_grades: 9.99
+  brand: one
+  style: one
+  category: one
+
+two:
+  name: MyString
+  presentation: MyString
+  description: MyText
+  price: 9.99
+  stock: 1
+  alcohol_grades: 9.99
+  brand: two
+  style: two
+  category: two

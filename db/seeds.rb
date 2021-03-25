@@ -45,3 +45,25 @@ categories_data.each do |category_data|
   new_category = Category.create(category)
 end
 puts 'end insertion of categories'
+
+puts 'start drink insertion'
+presentacion = ['Bottle 1.1 L.', 'Bottle 650 ml.', 'Bottle 330 ml.', 'Lata 335 ml.']
+brands = Brand.all
+styles = Style.all
+categories = Category.all
+
+Drink.destroy_all
+30.times do
+  Drink.create(
+    name: Faker::Beer.name,
+    presentation: presentacion.sample,
+    description: 'New drink',
+  price: rand(49) + 1,
+  stock: 12 + rand(60),
+  alcohol_grades: Faker::Beer.alcohol.to_f,
+  brand: brands.sample,
+  style: styles.sample,
+  category: categories.sample
+  )
+end
+puts 'End drink insertion'
