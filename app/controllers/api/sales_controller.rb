@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::SalesController < ApiController
   before_action :set_sale, only: %i[show]
 
