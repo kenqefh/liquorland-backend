@@ -6,5 +6,6 @@ Rails.application.routes.draw do
     post '/login' => 'sessions#create'
     get '/logout' => 'sessions#destroy'
     resources :brands, only: %i[index show]
+    resources :styles, only: %i[index show]
   end
 end
