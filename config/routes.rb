@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     resources :users, only: %i[show index create update] do
       resources :sales, only: %i[index show create]
     end
+    resources :carts, only: %i[index create destroy update]
+
     resources :brands, only: %i[index show]
     resources :styles, only: %i[index show]
     resources :categories, only: %i[index show]
