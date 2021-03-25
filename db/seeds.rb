@@ -32,3 +32,16 @@ puts 'Insert styles'
   Style.create(style_data)
 end
 puts 'end insertion of styles'
+
+puts 'Insert categories'
+Category.destroy_all
+categories_data = JSON.parse(File.read('db/categories.json'), symbolize_names: true)
+categories_data.each do |category_data|
+  category = {
+    name: category_data[:name],
+    description: category_data[:description],
+    color: category_data[:color]
+  }
+  new_category = Category.create(category)
+end
+puts 'end insertion of categories'

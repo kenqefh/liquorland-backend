@@ -10,5 +10,6 @@ Rails.application.routes.draw do
     end
     resources :brands, only: %i[index show]
     resources :styles, only: %i[index show]
+    resources :categories, only: %i[index show]
   end
 end
