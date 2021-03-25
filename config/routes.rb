@@ -7,5 +7,6 @@ Rails.application.routes.draw do
     get '/logout' => 'sessions#destroy'
     resources :users, only: %i[show index create update]
     resources :brands, only: %i[index show]
+    resources :styles, only: %i[index show]
   end
 end
