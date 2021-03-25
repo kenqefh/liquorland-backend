@@ -22,3 +22,12 @@ puts 'Insert brands'
   Brand.create(brand_data)
 end
 puts 'end insertion of brands'
+
+puts 'Insert styles'
+10.times do 
+  style_data = {
+    name: Faker::Beer.style 
+  }
+  Style.create(style_data)
+end
+puts 'end insertion of styles'
