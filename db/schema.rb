@@ -107,6 +107,17 @@ ActiveRecord::Schema.define(version: 2021_03_25_223502) do
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
+  create_table "sale_drinks", force: :cascade do |t|
+    t.bigint "sale_id", null: false
+    t.bigint "drink_id", null: false
+    t.integer "quantity", default: 1
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["drink_id", "sale_id"], name: "index_sale_drinks_on_drink_id_and_sale_id", unique: true
+    t.index ["drink_id"], name: "index_sale_drinks_on_drink_id"
+    t.index ["sale_id"], name: "index_sale_drinks_on_sale_id"
+  end
+
   create_table "sales", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.decimal "total", default: "0.0"
@@ -146,5 +157,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_223502) do
   add_foreign_key "favorites", "users"
   add_foreign_key "reviews", "drinks"
   add_foreign_key "reviews", "users"
+  add_foreign_key "sale_drinks", "drinks"
+  add_foreign_key "sale_drinks", "sales"
   add_foreign_key "sales", "users"
 end
