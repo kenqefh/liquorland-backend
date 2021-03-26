@@ -100,3 +100,26 @@ puts 'start insertion of sales'
   )
 end
 puts 'End insertion of sales'
+
+puts 'start insertion of reviews'
+drinks = Drink.all
+10.times do
+  Review.create(
+  drink: drinks.sample,
+  rating: rand(0...6),
+  comment: Faker::Quote.famous_last_words,
+  user: user
+  )
+end
+puts 'End insertion of reviews'
+
+puts 'start insertion of favorites'
+drinks = Drink.all
+10.times do
+  Favorite.create(
+  drink: drinks.sample,
+  user: user
+  )
+end
+puts 'End insertion of favorites'
+
