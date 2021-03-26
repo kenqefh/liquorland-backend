@@ -40,6 +40,7 @@ end
 
 gem 'email_validator'
 gem 'faker'
+gem 'rack-cors'
 # #
 
 group :development, :test do
