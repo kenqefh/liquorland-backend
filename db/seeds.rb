@@ -25,7 +25,7 @@ Style.destroy_all
 User.destroy_all
 
 puts 'Insert user'
-user = User.create(name: 'Test User', email: 'test@mail.com', password: '123456', direction: 'Pl. Saturno Luna 2')
+user = User.create(name: 'Test User', email: 'test@mail.com', password: '123456', direction: 'Pl. Saturno Luna 2', birth_date: '20-07-1998')
 puts 'END Insert user'
 
 puts 'Insert brands'
