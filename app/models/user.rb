@@ -17,9 +17,21 @@ class User < ApplicationRecord
   validates :email, presence: true, email: true, uniqueness: true
   validates :direction, length: { minimum: 3 }, allow_blank: true
 
+  validates :birth_date, presence: true
+  validate :under_age 
+
   enum role: { member: 0, admin: 1 }
 
   def invalidate_token
     update(token: nil)
+  end
+
+  
+  private
+
+  def under_age
+    return if !birth_date.nil? && birth_date <= 18.years.ago
+
+    errors.add(:birth_date, 'You should be 18 years old to create and account')
   end
 end
