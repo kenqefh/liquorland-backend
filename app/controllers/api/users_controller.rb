@@ -23,7 +23,6 @@ class Api::UsersController < ApiController
   end
 
   def update
-    puts '//////////////////////////////////////////////////////////////////////'
     if params[:avatar]
       current_user.avatar.purge if current_user.avatar.attached?
       current_user.avatar.attach params[:avatar]
@@ -36,15 +35,12 @@ class Api::UsersController < ApiController
     user_params[:role] = params[:role]  if params[:role]
     user_params[:password] = params[:password]  if params[:password]
     user_params[:birth_date] = params[:birth_date]  if params[:birth_date]
-    current_user.update user_params
 
-    puts '//////////////////////////////////////////////////////////////////////'
-    # if @user.update(user_params)
-    render json: current_user, except: %i[password_digest], methods: :avatar_url
-    # else
-    #   render json: @user.errors, status: :unprocessable_entity
-    # end
-    puts '//////////////////////////////////////////////////////////////////////'
+    if current_user.update user_params
+      render json: current_user, except: %i[password_digest], methods: :avatar_url
+    else
+      render json: current_user.errors, status: :unprocessable_entity
+    end
   end
 
   private

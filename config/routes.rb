@@ -5,7 +5,11 @@ Rails.application.routes.draw do
   namespace :api do
     post '/login' => 'sessions#create'
     get '/logout' => 'sessions#destroy'
-    resources :users, only: %i[show index create update]
+    resources :users, only: %i[index]
+    post '/signup', to: 'users#create'
+    get '/profile', to: 'users#show'
+    patch '/profile', to: 'users#update'
+
     resources :sales, only: %i[index show create]
     resources :carts, only: %i[index create destroy update]
     resources :favorites, only: %i[index create destroy]
