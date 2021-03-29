@@ -14,7 +14,7 @@ class Api::UsersController < ApiController
   end
 
   def show
-    render json: current_user, only: %i[id name email direction role created_at], methods: [:get_url]
+    render json: current_user, except: %i[password_digest], methods: [:get_url]
   end
 
   def index
