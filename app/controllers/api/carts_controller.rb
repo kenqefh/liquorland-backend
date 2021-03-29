@@ -5,7 +5,7 @@ class Api::CartsController < ApiController
     render json: current_user.carts,
     only: %i[id quantity created_at updated_at],
     include: {
-      drink: { only: %i[id image name presentation price] }
+      drink: { only: %i[id image name presentation price], methods: :image_url }
     }
   end
 

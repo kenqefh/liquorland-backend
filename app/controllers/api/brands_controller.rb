@@ -10,7 +10,9 @@ class Api::BrandsController < ApiController
   end
 
   def show
-    render json: @brand
+    render json: @brand, include: {
+      drinks: { methods: :image_url }
+    }
   end
 
   private

@@ -10,7 +10,8 @@ class Api::StylesController < ApiController
   end
 
   def show
-    render json: @style
+    render json: @style,
+    include: { drinks: { methods: :image_url } }
   end
 
   private

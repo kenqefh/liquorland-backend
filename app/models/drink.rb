@@ -1,4 +1,6 @@
 class Drink < ApplicationRecord
+  include Rails.application.routes.url_helpers
+
   belongs_to :brand
   belongs_to :style
   belongs_to :category
@@ -18,6 +20,11 @@ class Drink < ApplicationRecord
   validates :price, :stock, :alcohol_grades, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
   def rating_avg
-    reviews.map { |i| i.rating }.sum.to_f / reviews_count
+    (reviews.map { |i| i.rating }.sum.to_f / reviews_count).round(1)
+  end
+
+  def image_url
+    default_url_options[:host] = 'localhost:3000'
+    url_for(self.image) if self.image.attached?
   end
 end

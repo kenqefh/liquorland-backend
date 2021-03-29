@@ -40,7 +40,7 @@ class Api::SalesController < ApiController
       sale_drinks: {
         only: %i[id quantity],
         include: {
-          drink: { except: %i[reviews_count updated_at created_at] }
+          drink: { except: %i[reviews_count updated_at created_at], methods: :image_url }
         }
       }
     }, status: :ok

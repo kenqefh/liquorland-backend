@@ -8,17 +8,18 @@ class Api::CategoriesController < ApiController
   end
 
   def show
-    render json: @category
+    render json: @category,
+    include: {
+      drinks: { methods: [:image_url, :rating_avg] }
+    }
   end
 
   private
-
-   def set_category
+    def set_category
       @category = Category.find(params[:id])
+     end
+
+    def category_params
+      params.require(:category).permit(:name, :description, :color, :cover)
     end
-
-  def category_params
-    params.require(:category).permit(:name, :description, :color, :cover)
-  end
-
 end

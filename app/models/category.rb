@@ -3,4 +3,5 @@ class Category < ApplicationRecord
   validates :description, presence: true, length: { maximum: 150 }
 
   has_one_attached :cover
+  has_many :drinks
 end

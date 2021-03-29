@@ -6,14 +6,26 @@ class Api::DrinksController < ApiController
 
   def index
     drinks = Drink.all
-    render json: drinks
+    render json: drinks,
+    except: %i[brand_id style_id category_id],
+    include: {
+      brand: { only: [:id, :name] },
+      style: { only: [:id, :name] },
+      category: { only: [:id, :name] },
+    },
+    methods: %i[rating_avg image_url]
   end
 
   def show
-    drink_json=(JSON.parse @drink.to_json)
-    drink_json["avg"] = @drink.rating_avg
-    drink_json["reviews"] =  @drink.reviews
-    render json: drink_json
+    render json: @drink,
+    except: %i[brand_id style_id category_id],
+    include: {
+      brand: { only: [:id, :name] },
+      style: { only: [:id, :name] },
+      category: { only: [:id, :name] },
+      reviews: { except: %i[user_id drink_id], include: { user: { only: %i[id name], methods: :avatar_url } } }
+    },
+    methods: %i[rating_avg image_url]
   end
 
   private
