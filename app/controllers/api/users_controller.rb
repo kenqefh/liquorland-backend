@@ -7,7 +7,7 @@ class Api::UsersController < ApiController
     user = User.create(user_params)
     if user.valid?
       user.save
-      render json: user, only: %i[id name email direction role token created_at], status: :created
+      render json: user, except: %i[password_digest], status: :created
     else
       render json: user.errors, status: :unprocessable_entity
     end
