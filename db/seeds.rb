@@ -12,9 +12,9 @@ require 'faker'
 #   Character.create(name: 'Luke', movie: movies.first)
 
 Cart.destroy_all
-# Favorite.destroy_all
-# SaleDrink.destroy_all
-# Review.destroy_all
+Favorite.destroy_all
+SaleDrink.destroy_all
+Review.destroy_all
 
 Sale.destroy_all
 Drink.destroy_all
@@ -122,4 +122,3 @@ drinks = Drink.all
   )
 end
 puts 'End insertion of favorites'
-
