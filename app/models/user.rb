@@ -29,7 +29,8 @@ class User < ApplicationRecord
 
 
   def avatar_url
-    default_url_options[:host] = 'localhost:3000'
+    # default_url_options[:host] = 'localhost:3000'
+    default_url_options[:host] = 'https://liquorland-backend.herokuapp.com'
     url_for(self.avatar) if self.avatar.attached?
   end
 

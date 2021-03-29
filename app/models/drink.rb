@@ -24,7 +24,8 @@ class Drink < ApplicationRecord
   end
 
   def image_url
-    default_url_options[:host] = 'localhost:3000'
+    # default_url_options[:host] = 'localhost:3000'
+    default_url_options[:host] = 'https://liquorland-backend.herokuapp.com'
     url_for(self.image) if self.image.attached?
   end
 end
