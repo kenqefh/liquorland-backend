@@ -24,16 +24,28 @@ Brand.destroy_all
 Style.destroy_all
 User.destroy_all
 
+
+def get_image(folder, file_name)
+  { io: File.open(File.join(Rails.root, "/app/assets/images/#{folder}/#{file_name}")), filename: file_name }
+end
+
 puts 'Insert user'
-user = User.create(name: 'Test User', email: 'test@mail.com', password: '123456', direction: 'Pl. Saturno Luna 2', birth_date: '20-07-1998')
+user = User.create(name: 'Test User', email: 'test@mail.com', password: '123456', direction: 'Pl. Saturno Luna 100', birth_date: '2000-01-01')
+user.avatar.attach(get_image('profiles', 'photo_0.jpg'))
+
+user1 = User.create(name: 'Diana', email: 'diana@mail.com', password: '123456', direction: 'Pl. Saturno Luna 0', birth_date: '2000-12-01')
+user1.avatar.attach(get_image('profiles', 'photo_0.jpg'))
+
+user2 = User.create(name: 'Dina', email: 'dina@mail.com', password: '123456', direction: 'Pl. Saturno Luna 2', birth_date: '1998-07-20')
+user2.avatar.attach(get_image('profiles', 'photo_1.jpg'))
+
+user3 = User.create(name: 'Frank', email: 'frank@mail.com', password: '123456', direction: 'Pl. Saturno Luna 4', birth_date: '1990-01-01')
+user3.avatar.attach(get_image('profiles', 'photo_2.jpg'))
 puts 'END Insert user'
 
 puts 'Insert brands'
 10.times do
-  brand_data = {
-    name: Faker::Beer.brand
-  }
-  Brand.create(brand_data)
+  Brand.create(name: Faker::Beer.brand)
 end
 puts 'end insertion of brands'
 
@@ -54,71 +66,82 @@ categories_data.each do |category_data|
     description: category_data[:description],
     color: category_data[:color]
   }
-  new_category = Category.create(category)
+  Category.create(category)
 end
 puts 'end insertion of categories'
 
 puts 'start drink insertion'
-presentacion = ['Bottle 1.1 L.', 'Bottle 650 ml.', 'Bottle 330 ml.', 'Lata 335 ml.']
+presentations = ['Bottle 1.1 L.', 'Bottle 650 ml.', 'Bottle 330 ml.', 'Lata 335 ml.']
 brands = Brand.all
 styles = Style.all
 categories = Category.all
+users = [user, user1, user2, user3]
 
 30.times do
   Drink.create(
     name: Faker::Beer.name,
-    presentation: presentacion.sample,
+    presentation: presentations.sample,
     description: 'New drink',
-  price: rand(49) + 1,
-  stock: 12 + rand(60),
-  alcohol_grades: Faker::Beer.alcohol.to_f,
-  brand: brands.sample,
-  style: styles.sample,
-  category: categories.sample
+    price: rand(49) + 1,
+    stock: 12 + rand(60),
+    alcohol_grades: Faker::Beer.alcohol.to_f,
+    brand: brands.sample,
+    style: styles.sample,
+    category: categories.sample,
+    image: get_image('beers', '0.jpg')
   )
 end
 puts 'End drink insertion'
 
 puts 'start insertion of carts'
 drinks = Drink.all
-5.times do
+6.times do
   Cart.create(
   quantity: rand(10) + 1,
   drink: drinks.sample,
-  user: user
+  user: users.sample
   )
 end
 puts 'End insertion of carts'
 
 
 puts 'start insertion of sales'
-3.times do |ite|
-  Sale.create(
-  total: (1 * rand(9)) * 5,
-  user: user,
-  code: "SALE-000#{ite}"
-  )
+15.times do |ite|
+  code = "SALE-000#{ite + 1}"
+  total = 0
+  user = users.sample
+  sale = Sale.new(user: user, total: 0, code: code)
+
+  drinks.sample(rand(8)).each do |drink|
+    quantity = 1 + rand(5)
+    sale_drink = SaleDrink.new(drink: drink, quantity: quantity)
+    sale.sale_drinks.push(sale_drink)
+
+    total += drink.price * quantity
+  end
+
+  sale.total = total
+  sale.save
 end
 puts 'End insertion of sales'
 
 puts 'start insertion of reviews'
 drinks = Drink.all
-10.times do
+40.times do
   Review.create(
-  drink: drinks.sample,
-  rating: rand(0...6),
-  comment: Faker::Quote.famous_last_words,
-  user: user
+    drink: drinks.sample,
+    rating: rand(3...6),
+    comment: Faker::Quote.famous_last_words,
+    user: users.sample
   )
 end
 puts 'End insertion of reviews'
 
 puts 'start insertion of favorites'
-drinks = Drink.all
-10.times do
+25.times do
   Favorite.create(
-  drink: drinks.sample,
-  user: user
+    drink: drinks.sample,
+    user: users.sample
   )
 end
 puts 'End insertion of favorites'
