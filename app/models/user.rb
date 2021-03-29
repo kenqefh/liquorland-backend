@@ -28,8 +28,9 @@ class User < ApplicationRecord
   end
 
 
-  def get_url
-    'url_for(self.avatar)'
+  def avatar_url
+    default_url_options[:host] = 'localhost:3000'
+    url_for(self.avatar) if self.avatar.attached?
   end
 
   private

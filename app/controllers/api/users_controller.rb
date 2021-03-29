@@ -14,12 +14,12 @@ class Api::UsersController < ApiController
   end
 
   def show
-    render json: current_user, except: %i[password_digest], methods: [:get_url]
+    render json: current_user, except: %i[password_digest], methods: [:avatar_url]
   end
 
   def index
     users = User.all
-    render json: users, except: %i[token password_digest]
+    render json: users, except: %i[token password_digest], methods: [:avatar_url]
   end
 
   def update
@@ -40,7 +40,7 @@ class Api::UsersController < ApiController
 
     puts '//////////////////////////////////////////////////////////////////////'
     # if @user.update(user_params)
-    render json: current_user, except: %i[password_digest], methods: :get_url
+    render json: current_user, except: %i[password_digest], methods: :avatar_url
     # else
     #   render json: @user.errors, status: :unprocessable_entity
     # end
