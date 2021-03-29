@@ -34,6 +34,8 @@ class Api::UsersController < ApiController
     user_params[:email] = params[:email]  if params[:email]
     user_params[:direction] = params[:direction]  if params[:direction]
     user_params[:role] = params[:role]  if params[:role]
+    user_params[:password] = params[:password]  if params[:password]
+    user_params[:birth_date] = params[:birth_date]  if params[:birth_date]
     current_user.update user_params
 
     puts '//////////////////////////////////////////////////////////////////////'
@@ -47,6 +49,6 @@ class Api::UsersController < ApiController
 
   private
     def user_params
-      params.require(:user).permit(:name, :email, :direction, :role, :profile, :password, :birth_date)
+      params.require(:user).permit(:name, :email, :direction, :role, :password, :birth_date)
     end
 end
