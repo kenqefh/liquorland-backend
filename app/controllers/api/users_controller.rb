@@ -24,7 +24,7 @@ class Api::UsersController < ApiController
 
   def update
     if params[:avatar]
-      current_user.avatar.purge if current_user.avatar.attached?
+      # current_user.avatar.purge if current_user.avatar.attached?
       current_user.avatar.attach params[:avatar]
     end
 
