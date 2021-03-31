@@ -1,18 +1,16 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  include Rails.application.routes.url_helpers
-
   has_secure_password
   has_secure_token
 
-  has_one_attached :avatar
-  has_many :sales
-  has_many :reviews
-  has_many :carts
-  has_many :favorites
-  has_many :drinks_cart, through: :carts, source: :drink
-  has_many :drinks_favorite, through: :favorites, source: :drink
+  has_one_attached :avatar, dependent: :destroy
+  has_many :sales, dependent: :destroy
+  has_many :reviews, dependent: :destroy
+  has_many :carts, dependent: :destroy
+  has_many :favorites, dependent: :destroy
+  has_many :drinks_cart, through: :carts, source: :drink, dependent: :destroy
+  has_many :drinks_favorite, through: :favorites, source: :drink, dependent: :destroy
 
   validates :name, presence: true, length: { minimum: 2, maximum: 60 }
   validates :email, presence: true, email: true, uniqueness: true
@@ -29,9 +27,11 @@ class User < ApplicationRecord
 
 
   def avatar_url
-    # default_url_options[:host] = 'localhost:3000'
-    default_url_options[:host] = 'https://liquorland-backend.herokuapp.com'
-    url_for(self.avatar) if self.avatar.attached?
+    if avatar.attached?
+      Rails.application.routes.default_url_options[:host] = 'https://liquorland-backend.herokuapp.com'
+      # Rails.application.routes.default_url_options[:host] = 'http://localhost:3000'
+      Rails.application.routes.url_helpers.url_for(avatar)
+    end
   end
 
   private

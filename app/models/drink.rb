@@ -4,15 +4,15 @@ class Drink < ApplicationRecord
   belongs_to :brand
   belongs_to :style
   belongs_to :category
-  has_many :carts
-  has_many :favorites
-  has_many :users_cart, through: :carts, source: :user
-  has_many :sale_drinks
-  has_many :sales, through: :sale_drinks, source: :sale
-  has_many :users_favorite, through: :favorites, source: :user
-  has_one_attached :image
+  has_many :carts, dependent: :destroy
+  has_many :favorites, dependent: :destroy
+  has_many :users_cart, through: :carts, source: :user, dependent: :destroy
+  has_many :sale_drinks, dependent: :destroy
+  has_many :sales, through: :sale_drinks, source: :sale, dependent: :destroy
+  has_many :users_favorite, through: :favorites, source: :user, dependent: :destroy
+  has_one_attached :image, dependent: :destroy
 
-  has_many :reviews
+  has_many :reviews, dependent: :destroy
 
   validates :name, presence: true, length: { minimum: 2, maximum: 60 }
   validates :presentation, presence: true, length: { minimum: 2, maximum: 40 }
@@ -24,8 +24,10 @@ class Drink < ApplicationRecord
   end
 
   def image_url
-    # default_url_options[:host] = 'localhost:3000'
-    default_url_options[:host] = 'https://liquorland-backend.herokuapp.com'
-    url_for(self.image) if self.image.attached?
+    if image.attached?
+      Rails.application.routes.default_url_options[:host] = 'https://liquorland-backend.herokuapp.com'
+      # Rails.application.routes.default_url_options[:host] = 'http://localhost:3000'
+      Rails.application.routes.url_helpers.url_for(image)
+    end
   end
 end
