@@ -10,7 +10,7 @@ class Drink < ApplicationRecord
   has_many :sale_drinks
   has_many :sales, through: :sale_drinks, source: :sale
   has_many :users_favorite, through: :favorites, source: :user
-  has_one_attached :image
+  has_one_attached :image, dependent: :destroy
 
   has_many :reviews
 
@@ -24,8 +24,10 @@ class Drink < ApplicationRecord
   end
 
   def image_url
-    # default_url_options[:host] = 'localhost:3000'
-    default_url_options[:host] = 'https://liquorland-backend.herokuapp.com'
-    url_for(self.image) if self.image.attached?
+    if image.attached?
+      Rails.application.routes.default_url_options[:host] = 'https://liquorland-backend.herokuapp.com'
+      # Rails.application.routes.default_url_options[:host] = 'http://localhost:3000'
+      Rails.application.routes.url_helpers.url_for(image)
+    end
   end
 end

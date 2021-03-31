@@ -1,12 +1,10 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  include Rails.application.routes.url_helpers
-
   has_secure_password
   has_secure_token
 
-  has_one_attached :avatar
+  has_one_attached :avatar, dependent: :destroy
   has_many :sales
   has_many :reviews
   has_many :carts
@@ -29,9 +27,11 @@ class User < ApplicationRecord
 
 
   def avatar_url
-    # default_url_options[:host] = 'localhost:3000'
-    default_url_options[:host] = 'https://liquorland-backend.herokuapp.com'
-    url_for(self.avatar) if self.avatar.attached?
+    if avatar.attached?
+      Rails.application.routes.default_url_options[:host] = 'https://liquorland-backend.herokuapp.com'
+      # Rails.application.routes.default_url_options[:host] = 'http://localhost:3000'
+      Rails.application.routes.url_helpers.url_for(avatar)
+    end
   end
 
   private

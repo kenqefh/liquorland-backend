@@ -41,7 +41,7 @@ end
 gem 'email_validator'
 gem 'faker'
 gem 'rack-cors'
-gem 'active_model_serializers'
+gem 'cloudinary'
 # #
 
 group :development, :test do
