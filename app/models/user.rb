@@ -5,12 +5,12 @@ class User < ApplicationRecord
   has_secure_token
 
   has_one_attached :avatar, dependent: :destroy
-  has_many :sales
-  has_many :reviews
-  has_many :carts
-  has_many :favorites
-  has_many :drinks_cart, through: :carts, source: :drink
-  has_many :drinks_favorite, through: :favorites, source: :drink
+  has_many :sales, dependent: :destroy
+  has_many :reviews, dependent: :destroy
+  has_many :carts, dependent: :destroy
+  has_many :favorites, dependent: :destroy
+  has_many :drinks_cart, through: :carts, source: :drink, dependent: :destroy
+  has_many :drinks_favorite, through: :favorites, source: :drink, dependent: :destroy
 
   validates :name, presence: true, length: { minimum: 2, maximum: 60 }
   validates :email, presence: true, email: true, uniqueness: true
