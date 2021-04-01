@@ -2,27 +2,20 @@
 
 class Api::DrinksController < ApiController
   before_action :set_drink, only:  %i[show]
-  skip_before_action :authorize, only: %i[index show top_recent_drinks best_sellings]
+  skip_before_action :authorize, only: %i[index show top_most_high_rated top_recent_drinks best_sellings]
 
   def top_recent_drinks
     drinks = Drink
     .order(created_at: :desc)
     .limit(params[:limit] || 3)
 
-    result = {
+    @result = {
       id: 1,
       name: 'Top New Drinks',
-      description: "When we drink we get drunk. When we get drunk we fall asleep. When we fall asleep we commit no sin. When we commit no sin we go to heaven. Sooooo, let's all get drunk and go to heaven!",
+      description: 'Our new and future releases. Updated hourly',
       drinks: drinks
     }
-    render json: result,
-    except: %i[brand_id style_id category_id],
-    include: {
-      brand: { only: [:id, :name] },
-      style: { only: [:id, :name] },
-      category: { only: [:id, :name] },
-    },
-    methods: [:image_url, :rating_avg]
+    render_result
   end
 
   def best_sellings
@@ -32,20 +25,25 @@ class Api::DrinksController < ApiController
     .order('COUNT(sale_drinks.id) DESC')
     .limit(params[:limit] || 3)
 
-    result = {
+    @result = {
       id: 1,
       name: 'Best sellings',
-      description: 'Reality is an illusion that occurs due to lack of alcohol.',
+      description: 'Our most popular products based on sales. Updated hourly.',
       drinks: drinks
     }
-    render json: result,
-    except: %i[brand_id style_id category_id],
-    include: {
-      brand: { only: [:id, :name] },
-      style: { only: [:id, :name] },
-      category: { only: [:id, :name] },
-    },
-    methods: [:image_url, :rating_avg]
+    render_result
+  end
+
+  def top_most_high_rated
+    drinks = Drink.all.sort_by { |drink| drink.rating_avg }.reverse.first(params[:limit].to_i || 3)
+
+    @result = {
+      id: 1,
+      name: 'Most Rating Drinks',
+      description: 'The problem with the world is that everyone is a few drinks behind.',
+      drinks: drinks
+    }
+    render_result
   end
 
   def index
@@ -75,5 +73,16 @@ class Api::DrinksController < ApiController
   private
     def set_drink
       @drink = Drink.find(params[:id])
+    end
+
+    def render_result
+      render json: @result,
+      except: %i[brand_id style_id category_id],
+      include: {
+        brand: { only: [:id, :name] },
+        style: { only: [:id, :name] },
+        category: { only: [:id, :name] },
+      },
+      methods: [:image_url, :rating_avg]
     end
 end
