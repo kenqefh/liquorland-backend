@@ -20,5 +20,8 @@ Rails.application.routes.draw do
     resources :drinks, only: %i[index show] do
       resources :reviews, only: %i[index create update destroy]
     end
+
+
+    get '/top-high-rated-drinks', to: 'drinks#top_most_high_rated'
   end
 end

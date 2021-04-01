@@ -20,6 +20,7 @@ class Drink < ApplicationRecord
   validates :price, :stock, :alcohol_grades, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
   def rating_avg
+    return 0.0 if reviews_count === 0
     (reviews.map { |i| i.rating }.sum.to_f / reviews_count).round(1)
   end
 
