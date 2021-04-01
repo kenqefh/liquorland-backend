@@ -31,7 +31,14 @@ class Api::DrinksController < ApiController
   def search
     drinks = Drink.where('lower(name) like ?', "%#{(params[:name] || '').downcase}%").order(:name)
 
-    render json: drinks, methods: [:image_url, :rating_avg]
+    render json: drinks,
+    except: %i[brand_id style_id category_id],
+    include: {
+      brand: { only: [:id, :name] },
+      style: { only: [:id, :name] },
+      category: { only: [:id, :name] },
+    },
+    methods: [:image_url, :rating_avg]
   end
 
   private
