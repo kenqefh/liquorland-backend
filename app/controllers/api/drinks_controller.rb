@@ -39,8 +39,7 @@ class Api::DrinksController < ApiController
       id: 1,
       name: 'Best sellings',
       description: 'Reality is an illusion that occurs due to lack of alcohol.',
-      drinks: drinks,
-      drinks2: drinks
+      drinks: drinks
     }
     render json: result, methods: [:image_url, :rating_avg]
   end
