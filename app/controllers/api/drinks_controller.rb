@@ -41,7 +41,14 @@ class Api::DrinksController < ApiController
       description: 'Reality is an illusion that occurs due to lack of alcohol.',
       drinks: drinks
     }
-    render json: result, methods: [:image_url, :rating_avg]
+    render json: result,
+    except: %i[brand_id style_id category_id],
+    include: {
+      brand: { only: [:id, :name] },
+      style: { only: [:id, :name] },
+      category: { only: [:id, :name] },
+    },
+    methods: [:image_url, :rating_avg]
   end
 
   private
