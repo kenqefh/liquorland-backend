@@ -2,7 +2,7 @@
 
 class Api::DrinksController < ApiController
   before_action :set_drink, only:  %i[show]
-  skip_before_action :authorize, only: %i[index show]
+  skip_before_action :authorize, only: %i[index show search]
 
   def index
     drinks = Drink.all
@@ -26,6 +26,12 @@ class Api::DrinksController < ApiController
       reviews: { except: %i[user_id drink_id], include: { user: { only: %i[id name], methods: :avatar_url } } }
     },
     methods: %i[rating_avg image_url]
+  end
+
+  def search
+    drinks = Drink.where('lower(name) like ?', "%#{(params[:name] || '').downcase}%").order(:name)
+
+    render json: drinks, methods: [:image_url, :rating_avg]
   end
 
   private
