@@ -11,8 +11,8 @@ class Api::CategoriesController < ApiController
     render json: @category,
     include: {
       drinks: { methods: [:image_url, :rating_avg] },
-      methods: :cover_url
-    }
+    },
+    methods: :cover_url
   end
 
   private
