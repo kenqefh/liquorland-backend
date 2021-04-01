@@ -2,7 +2,7 @@
 
 class Api::DrinksController < ApiController
   before_action :set_drink, only:  %i[show]
-  skip_before_action :authorize, only: %i[index show]
+  skip_before_action :authorize, only: %i[index show top_recent_drinks]
 
   def index
     drinks = Drink.all
@@ -26,6 +26,20 @@ class Api::DrinksController < ApiController
       reviews: { except: %i[user_id drink_id], include: { user: { only: %i[id name], methods: :avatar_url } } }
     },
     methods: %i[rating_avg image_url]
+  end
+
+  def top_recent_drinks
+    drinks = Drink
+    .order(created_at: :desc)
+    .limit(params[:limit] || 3)
+
+    result = {
+      id: 1,
+      name: 'Top New Drinks',
+      description: "When we drink we get drunk. When we get drunk we fall asleep. When we fall asleep we commit no sin. When we commit no sin we go to heaven. Sooooo, let's all get drunk and go to heaven!",
+      drinks: drinks
+    }
+    render json: result, methods: [:image_url, :rating_avg]
   end
 
   private
