@@ -21,7 +21,8 @@ Rails.application.routes.draw do
       resources :reviews, only: %i[index create update destroy]
     end
 
-
     get '/top-high-rated-drinks', to: 'drinks#top_most_high_rated'
+    get '/top-recent-drinks', to: 'drinks#top_recent_drinks'
+    get '/best-sellings', to: 'drinks#best_sellings'
   end
 end
