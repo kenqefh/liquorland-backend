@@ -4,14 +4,15 @@ class Api::CategoriesController < ApiController
 
   def index
     categories = Category.all
-    render json: categories
+    render json: categories, methods: :cover_url
   end
 
   def show
     render json: @category,
     include: {
-      drinks: { methods: [:image_url, :rating_avg] }
-    }
+      drinks: { methods: [:image_url, :rating_avg] },
+    },
+    methods: :cover_url
   end
 
   private

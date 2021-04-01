@@ -64,7 +64,8 @@ categories_data.each do |category_data|
   category = {
     name: category_data[:name],
     description: category_data[:description],
-    color: category_data[:color]
+    color: category_data[:color],
+    cover: get_image('categories', category_data[:image])
   }
   Category.create(category)
 end
